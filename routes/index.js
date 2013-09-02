@@ -2,18 +2,26 @@
  * Routes
  */
 
+var twitterConn = require('../lib/twitter-conn');
+
 module.exports = function(app) {
 
     app.get('/', function(req, res) {
-        res.locals = {
-            title: 'Node Boiler'
-        };
         res.render('index', {
-            partials: {
-                title: 'title'
-            }
+            title: 'title',
+            twitterLink: twitterConn.twitterConfig.login
         });
     });
+
+    app.get('/search/:term', twitterConn.twitterAuth.middleware, function(req, res){
+        twitterConn.twitterAuth.search(req.params.term, req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(error, data) {
+            res.json(data);
+        });
+    });
+
+    app.get(twitterConn.twitterConfig.login, twitterConn.twitterAuth.oauthConnect);
+    app.get(twitterConn.twitterConfig.loginCallback, twitterConn.twitterAuth.oauthCallback);
+    app.get(twitterConn.twitterConfig.logout, twitterConn.twitterAuth.logout);
 
     /**
      * Errors

@@ -29,6 +29,9 @@ module.exports.boot = function(app) {
             layout: false
         });
 
+        app.use(express.cookieParser());
+        app.use(express.session({ secret: 'trick the trickster'}));
+
         // -- Parses x-www-form-urlencoded request bodies (and json)
         app.use(express.bodyParser());
         app.use(express.methodOverride());
