@@ -1,7 +1,7 @@
 
 // -- Module dependencies
 var express = require('express');
-
+var passportConn = require('./lib/passprt-conn');
 // -- Global Paths
 var views = __dirname + '/views',
     static_root = __dirname + '/static';
@@ -31,6 +31,8 @@ module.exports.boot = function(app) {
 
         app.use(express.cookieParser());
         app.use(express.session({ secret: 'trick the trickster'}));
+        app.use(passportConn.passport.initialize()); // Add passport initialization
+        app.use(passportConn.passport.session());    // Add passport initialization
 
         // -- Parses x-www-form-urlencoded request bodies (and json)
         app.use(express.bodyParser());
@@ -64,3 +66,5 @@ module.exports.boot = function(app) {
     });
 
 }
+
+module.exports.passportConn = passportConn;

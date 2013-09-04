@@ -1,44 +1,43 @@
 /**
  * Routes
  */
+module.exports = function(app, passportConn) {
 
-var twitterConn = require('../lib/twitter-conn');
+    // Define a middleware function to be used for every secured routes
+    var auth = function(req, res, next){
+        if (!req.isAuthenticated())
+            res.send(401);
+        else
+            next();
+    };
 
-module.exports = function(app) {
-
-    app.get('/', function(req, res) {
-        res.render('index', {
-            title: 'title',
-            twitterLink: twitterConn.twitterConfig.login
-        });
+    //==================================================================
+    // routes
+    app.get('/', function(req, res){
+        res.render('index', { title: 'Charity Today' });
     });
 
-    app.get('/search/:term', twitterConn.twitterAuth.middleware, function(req, res){
-        twitterConn.twitterAuth.search(req.params.term, req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function(error, data) {
-            res.json(data);
-        });
+    app.get('/users', auth, function(req, res){
+        res.send([{name: "user1"}, {name: "user2"}]);
+    });
+    //==================================================================
+
+    //==================================================================
+    // route to test if the user is logged in or not
+    app.get('/loggedin', function(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
     });
 
-    app.get(twitterConn.twitterConfig.login, twitterConn.twitterAuth.oauthConnect);
-    app.get(twitterConn.twitterConfig.loginCallback, twitterConn.twitterAuth.oauthCallback);
-    app.get(twitterConn.twitterConfig.logout, twitterConn.twitterAuth.logout);
-
-    /**
-     * Errors
-     */
-
-    app.get('/404', function(req, res, next) {
-        next();
+    // route to log in
+    app.post('/login', passportConn.passport.authenticate('local'), function(req, res) {
+        res.send(req.user);
     });
 
-    app.get('/403', function(req, res, next) {
-        var err = new Error('Not Allowed!');
-        err.status = 403;
-        next(err);
+    // route to log out
+    app.post('/logout', function(req, res){
+        req.logOut();
+        res.send(200);
     });
+    //==================================================================
 
-    app.get('/500', function(req, res, next) {
-        next(new Error());
-    });
-
-}
+};

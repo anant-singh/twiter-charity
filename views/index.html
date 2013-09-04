@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{> title}}
+    <title>{{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!--Set the descritpion of you site-->
     <meta name="description" content="Syndicate - One Page Bootstrap Multipurpose Template">
@@ -28,13 +28,13 @@
 
     <!-- AngularJS Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="angular/app.js"></script>
     <script src="angular/plugins/ui-bootstrap.min.js"></script>
-    <script src="angular/controllers/HomeCtrl.js"></script>
+    <script src="angular/plugins/angular-resource.min.js"></script>
+    <script src="angular/app.js"></script>
 </head>
-<body>
-Hello world!
-<a href="{{ twitterLink }}">Sign In</a>
+<body ng-app="ctApp" ng-cloak>
+
+<ng-view></ng-view>
 
 <!-- Javascript includes -->
 <script src="js/retina.js"></script>

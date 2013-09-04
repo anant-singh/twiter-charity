@@ -3,7 +3,8 @@
 var express     = require('express'),
     http        = require('http'),
     logo        = require('./lib/logo'),
-    color       = require('colors');
+    color       = require('colors'),
+    bootstrap   = require('./bootstrap');
 
 // -- Create Express instance and export
 var app         = express(),
@@ -15,14 +16,14 @@ var app         = express(),
 conf            (app, express, env);
 
 // -- Bootstrap Config
-require('./bootstrap').boot(app);
+bootstrap.boot(app);
 
 // -- Routes
-require('./routes/index')(app);
+require('./routes/index')(app, bootstrap.passportConn);
 
 // -- Only listen on $ node app.js
 logo.print();
 
-http.createServer(app).listen(settings.port, function(){
-    console.log("Express server listening on "+" port %d ".bold.inverse.red+" in " + " %s mode ".bold.inverse.green + " //", settings.port, env);
+http.createServer(app).listen(settings.port, function() {
+    console.log("Express server listening on " + " port %d ".bold.inverse.red + " in " + " %s mode ".bold.inverse.green + " //", settings.port, env);
 });
