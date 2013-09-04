@@ -16,12 +16,12 @@ var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
         //================================================
         // Check if the user is connected
         //================================================
-        var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
+        var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
             // Initialize a new promise
             var deferred = $q.defer();
 
             // Make an AJAX call to check if the user is logged in
-            $http.get('/loggedin').success(function(user){
+            $http.get('/loggedin').success(function(user) {
                 // Authenticated
                 if (user !== '0')
                     $timeout(deferred.resolve, 0);
@@ -45,7 +45,7 @@ var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
             return function(promise) {
                 return promise.then(
                     // Success: just return the response
-                    function(response){
+                    function(response) {
                         return response;
                     },
                     // Error: check the error status to get only the 401
@@ -64,11 +64,11 @@ var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
         //================================================
         $routeProvider
             .when('/', {
-                templateUrl: '/views/main.html'
+                templateUrl: 'views/main.html'
             })
-            .when('/admin', {
-                templateUrl: 'views/admin.html',
-                controller: 'AdminCtrl',
+            .when('/tweet', {
+                templateUrl: 'views/tweet.html',
+                controller: 'TweetCtrl',
                 resolve: {
                     loggedin: checkLoggedin
                 }
@@ -83,11 +83,11 @@ var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
         //================================================
 
     }) // end of config()
-    .run(function($rootScope, $http){
+    .run(function($rootScope, $http) {
         $rootScope.message = '';
 
         // Logout function is available in any pages
-        $rootScope.logout = function(){
+        $rootScope.logout = function() {
             $rootScope.message = 'Logged out.';
             $http.post('/logout');
         };
@@ -95,8 +95,8 @@ var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
 
 
 /**********************************************************************
- * Login controller
- **********************************************************************/
+* Login controller
+**********************************************************************/
 app.controller('LoginCtrl', function($scope, $rootScope, $http, $location) {
     // This object will be filled by the form
     $scope.user = {};
@@ -110,7 +110,7 @@ app.controller('LoginCtrl', function($scope, $rootScope, $http, $location) {
             .success(function(user) {
                 // No error: authentication OK
                 $rootScope.message = 'Authentication successful!';
-                $location.url('/admin');
+                $location.url('/tweet');
             })
             .error(function() {
                 // Error: authentication failed
@@ -123,15 +123,8 @@ app.controller('LoginCtrl', function($scope, $rootScope, $http, $location) {
 
 
 /**********************************************************************
- * Admin controller
+ * Tweet controller
  **********************************************************************/
-app.controller('AdminCtrl', function($scope, $http) {
-    // List of users got from the server
-    $scope.users = [];
+app.controller('TweetCtrl', function($scope, $http) {
 
-    // Fill the array to display it in the page
-    $http.get('/users').success(function(users) {
-        for (var i in users)
-            $scope.users.push(users[i]);
-    });
 });

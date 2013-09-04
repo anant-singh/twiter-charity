@@ -25,8 +25,9 @@ module.exports.boot = function(app) {
 
         // -- Set uncompressed html output and disable layout templating
         app.locals({
-            pretty : true,
-            layout: false
+            title:      'Charity Today',
+            pretty :    true,
+            layout:     false
         });
 
         app.use(express.cookieParser());

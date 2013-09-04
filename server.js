@@ -19,7 +19,7 @@ conf            (app, express, env);
 bootstrap.boot(app);
 
 // -- Routes
-require('./routes/index')(app, bootstrap.passportConn);
+require('./routes/main')(app, bootstrap.passportConn);
 
 // -- Only listen on $ node app.js
 logo.print();

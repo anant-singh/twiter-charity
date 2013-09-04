@@ -14,12 +14,13 @@ module.exports = function(app, passportConn) {
     //==================================================================
     // routes
     app.get('/', function(req, res){
-        res.render('index', { title: 'Charity Today' });
+        res.render('index');
     });
 
-    app.get('/users', auth, function(req, res){
-        res.send([{name: "user1"}, {name: "user2"}]);
-    });
+    app.get('/auth/twitter/callback', passportConn.passport.authenticate('twitter', {
+        successRedirect: '/#/tweet',
+        failureRedirect: '/#/login'
+    }));
     //==================================================================
 
     //==================================================================
@@ -29,9 +30,7 @@ module.exports = function(app, passportConn) {
     });
 
     // route to log in
-    app.post('/login', passportConn.passport.authenticate('local'), function(req, res) {
-        res.send(req.user);
-    });
+    app.get('/auth/twitter', passportConn.passport.authenticate('twitter'));
 
     // route to log out
     app.post('/logout', function(req, res){
