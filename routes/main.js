@@ -19,8 +19,12 @@ module.exports = function(app, passportConn) {
 
     app.get('/auth/twitter/callback', passportConn.passport.authenticate('twitter', {
         successRedirect: '/#/tweet',
-        failureRedirect: '/#/login'
+        failureRedirect: '/'
     }));
+
+    app.get('/tweet/info', auth, function(req, res) {
+        res.json(req.user);
+    });
     //==================================================================
 
     //==================================================================

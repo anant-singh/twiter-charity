@@ -1,0 +1,14 @@
+.top-section{
+    background: url("../img/pattern_bg_blue.png") repeat 0 0;
+    background: url("../img/bottom_bg.png") repeat-x 0 bottom,
+                url('../img/main_bg_blue.png') no-repeat center top,
+                url('../img/pattern_bg_blue.png') repeat 0 0;
+    }
+.notify-msg{
+    color: #285769
+    }
+.sub-hero-copy,
+.unodos .label,
+.unodos .sep{
+    color: #B8E1FC;
+    }

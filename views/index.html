@@ -1,42 +1,73 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<!--[if IE 7 ]><html class="ie7 ieold"><![endif]-->
+<!--[if IE 8 ]><html class="ie8 ieold"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html><!--<![endif]-->
 <head>
-    <title>{{ title }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!--Set the descritpion of you site-->
-    <meta name="description" content="Syndicate - One Page Bootstrap Multipurpose Template">
-    <!--Set author of your site-->
-    <meta name="author" content="Awerest - interactive agency">
-    <!--Modernizr-->
-    <script src="js/modernizr.js" type="text/javascript"></script>
-    <!--Main Bootstrap styling-->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <!--Custom styling-->
-    <link rel="stylesheet" href="css/style.css">
-    <!--Iconic font - FontAwesome-->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
-    <!--Google font-->
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Raleway:200,400'>
-    <!--Site thumbnail-->
-    <link rel="image_src" href="thumbnail.png">
-    <!--Browser tab icon aka Favicon-->
-    <link rel="icon" type="image/ico" href="favicon.ico">
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <meta charset="utf-8">
+
+    <!-- Title -->
+    <title> Nebulus | Responsive HTML5 &amp; CSS3 Coming Soon</title>
+
+    <!-- Site Meta -->
+    <meta name="description" content="Responsive HTML5 &amp; CSS3 Coming Soon">
+    <meta name="viewport" content="width=device-width, user-scalable = no">
+
+    <!-- Icons -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="img/touch-icon.png">
+
+    <!-- Win 8 Tiles -->
+    <meta name="application-name" content=" Charity Today | The next Generation Charity Platform"/>
+    <meta name="msapplication-TileColor" content="#ffffff"/>
+    <meta name="msapplication-TileImage" content="img/touch-icon.png"/>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- CSS -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,400italic,700,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+
+
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
     <![endif]-->
 
     <!-- AngularJS Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="angular/plugins/ui-bootstrap.min.js"></script>
+    <!--<script src="angular/plugins/ui-bootstrap.min.js"></script>-->
     <script src="angular/plugins/angular-resource.min.js"></script>
     <script src="angular/app.js"></script>
+
 </head>
 <body ng-app="ctApp" ng-cloak>
 
 <ng-view></ng-view>
 
-<!-- Javascript includes -->
-<script src="js/retina.js"></script>
+<!-- JS (CDN jQuery with Local Fallback)-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script>!window.jQuery && document.write('<script src="js/libs/jquery.min.js"><\/script>')</script>
+<script src="js/libs/jquery.tweet.js"></script>
+<script src="js/scripts.js"></script>
+
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39246955-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
 </body>
 </html>

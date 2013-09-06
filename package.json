@@ -12,6 +12,8 @@
       "connect-assets": "*",
       "mongoose": "3.6.*",
       "request": "*",
-      "twitter-oauth": "*"
+      "passport": "*",
+      "passport-twitter": "*",
+      "passport-local": "*"
   }
 }

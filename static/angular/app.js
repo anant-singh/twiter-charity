@@ -10,7 +10,7 @@
 /**********************************************************************
  * Angular Application
  **********************************************************************/
-var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
+var app = angular.module('ctApp', ['ngResource'])
     .config(function($routeProvider, $locationProvider, $httpProvider, $interpolateProvider) {
         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
         //================================================
@@ -64,7 +64,7 @@ var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
         //================================================
         $routeProvider
             .when('/', {
-                templateUrl: 'views/main.html'
+                templateUrl: 'views/default.html'
             })
             .when('/tweet', {
                 templateUrl: 'views/tweet.html',
@@ -74,8 +74,8 @@ var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
                 }
             })
             .when('/login', {
-                templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
+                templateUrl: 'views/login.html'
+//                controller: 'LoginCtrl'
             })
             .otherwise({
                 redirectTo: '/'
@@ -94,31 +94,31 @@ var app = angular.module('ctApp', ['ngResource', 'ui.bootstrap'])
     });
 
 
-/**********************************************************************
-* Login controller
-**********************************************************************/
-app.controller('LoginCtrl', function($scope, $rootScope, $http, $location) {
-    // This object will be filled by the form
-    $scope.user = {};
-
-    // Register the login() function
-    $scope.login = function() {
-        $http.post('/login', {
-            username: $scope.user.username,
-            password: $scope.user.password
-        })
-            .success(function(user) {
-                // No error: authentication OK
-                $rootScope.message = 'Authentication successful!';
-                $location.url('/tweet');
-            })
-            .error(function() {
-                // Error: authentication failed
-                $rootScope.message = 'Authentication failed.';
-                $location.url('/login');
-            });
-    };
-});
+///**********************************************************************
+//* Login controller
+//**********************************************************************/
+//app.controller('LoginCtrl', function($scope, $rootScope, $http, $location) {
+//    // This object will be filled by the form
+//    $scope.user = {};
+//
+//    // Register the login() function
+//    $scope.login = function() {
+//        $http.post('/login', {
+//            username: $scope.user.username,
+//            password: $scope.user.password
+//        })
+//            .success(function(user) {
+//                // No error: authentication OK
+//                $rootScope.message = 'Authentication successful!';
+//                $location.url('/tweet');
+//            })
+//            .error(function() {
+//                // Error: authentication failed
+//                $rootScope.message = 'Authentication failed.';
+//                $location.url('/login');
+//            });
+//    };
+//});
 
 
 
@@ -126,5 +126,7 @@ app.controller('LoginCtrl', function($scope, $rootScope, $http, $location) {
  * Tweet controller
  **********************************************************************/
 app.controller('TweetCtrl', function($scope, $http) {
-
+    $http.get('/tweet/info').success(function(user) {
+        $scope.user = user;
+    })
 });

@@ -1,14 +1,27 @@
-<h1>Login</h1>
-<form ng-submit="login()">
-  <p>
-    <label class="control-label">Username</label>
-  	<input type="text" placeholder="Username" ng-model="user.username" />
-  </p>
-  <p>
-    <label class="control-label">Password</label>
-  	<input type="password" placeholder="Password" ng-model="user.password" /><br/>
-  </p>
-  <p>
-    <button type="submit" class="btn btn-primary">Login</button>
-  </p>
-</form>
+<section class="top-section" xmlns="http://www.w3.org/1999/html">
+    <div class="wrap">
+        <p class="social pressed-box">
+            <a href="#" class="twitter"><img src="{[{ user.photos[0].value }]}"></a>
+        </p>
+
+        <h1>Welcome to Charity Today</h1>
+
+        <h4 class="hero-copy">The next generation charity platform.</h4>
+
+    </div>
+    <!-- /Wrap -->
+</section>
+<!-- /Top Section -->
+
+<section id="bottom" class="bottom-section">
+    <div class="row bottom-cols wrap cf">
+        <div class="col span12">
+            <article>
+                <div class="col span6">
+                    <p>Hi, {[{ user.displayName }]}</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+<!-- /Bottom Columns -->
