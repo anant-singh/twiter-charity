@@ -10,7 +10,7 @@
 /**********************************************************************
  * Angular Application
  **********************************************************************/
-var app = angular.module('ctApp', ['ngResource'])
+var app = angular.module('ctApp', ['ngResource', '$strap.directives'])
     .config(function($routeProvider, $locationProvider, $httpProvider, $interpolateProvider) {
         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
         //================================================
@@ -93,7 +93,11 @@ var app = angular.module('ctApp', ['ngResource'])
         };
     });
 
-
+/**
+ * **********************************************************************
+ * *************************** Controllers ******************************
+ * **********************************************************************
+ */
 ///**********************************************************************
 //* Login controller
 //**********************************************************************/
@@ -126,7 +130,33 @@ var app = angular.module('ctApp', ['ngResource'])
  * Tweet controller
  **********************************************************************/
 app.controller('TweetCtrl', function($scope, $http) {
+    $scope.tweet = {};
+    $scope.tweet.date = '';
+    $scope.stat = false;
     $http.get('/tweet/info').success(function(user) {
         $scope.user = user;
     })
+
+    $scope.encode = function(url) {
+        return encodeURI(url);
+    }
+
+    $scope.submit = function() {
+        if ($scope.tweet.tweetBox.length > 140) {
+            $scope.errFlag = true;
+            $scope.errMsg = "Tweet Length is larger than 140 characters";
+        } else {
+            $scope.errFlag = false;
+            $scope.errMsg = '';
+            $http.
+                post('/tweet/data', $scope.tweet)
+                .success(function(stat) {
+                    $scope.stat = stat;
+                    if ($scope.stat) {
+                        $scope.tweet = {};
+
+                    }
+            })
+        }
+    }
 });

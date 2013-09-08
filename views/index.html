@@ -30,31 +30,37 @@
     <!-- CSS -->
     <link href='http://fonts.googleapis.com/css?family=Lato:400,400italic,700,900' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
-
 
     <!--[if IE 7]>
     <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
     <![endif]-->
 
+    <!-- JS (CDN jQuery with Local Fallback)-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script>!window.jQuery && document.write('<script src="js/libs/jquery.min.js"><\/script>')</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="js/libs/jquery.tweet.js"></script>
+    <script src="js/scripts.js"></script>
+
     <!-- AngularJS Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <!--<script src="angular/plugins/ui-bootstrap.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.4/angular-strap.min.js"></script>
     <script src="angular/plugins/angular-resource.min.js"></script>
     <script src="angular/app.js"></script>
+
+    <script src="js/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="js/plugins/timepicker/bootstrap-timepicker.js"></script>
+    <link rel="stylesheet" href="js/plugins/datepicker/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="js/plugins/timepicker/bootstrap-timepicker.css">
 
 </head>
 <body ng-app="ctApp" ng-cloak>
 
 <ng-view></ng-view>
-
-<!-- JS (CDN jQuery with Local Fallback)-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script>!window.jQuery && document.write('<script src="js/libs/jquery.min.js"><\/script>')</script>
-<script src="js/libs/jquery.tweet.js"></script>
-<script src="js/scripts.js"></script>
 
 <script type="text/javascript">
 

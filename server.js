@@ -4,6 +4,7 @@ var express     = require('express'),
     http        = require('http'),
     logo        = require('./lib/logo'),
     color       = require('colors'),
+    moment      = require('moment');
     bootstrap   = require('./bootstrap');
 
 // -- Create Express instance and export
@@ -19,7 +20,7 @@ conf            (app, express, env);
 bootstrap.boot(app);
 
 // -- Routes
-require('./routes/main')(app, bootstrap.passportConn);
+require('./routes/main')(app, bootstrap.passportConn, moment);
 
 // -- Only listen on $ node app.js
 logo.print();

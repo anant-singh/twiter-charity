@@ -1,19 +1,21 @@
 {
-  "name": "nodeboiler",
+  "name": "Charity Today",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node server"
   },
   "dependencies": {
-      "express": "3.0.0",
-      "hogan-express": "*",
-      "colors": "*",
-      "connect-assets": "*",
-      "mongoose": "3.6.*",
-      "request": "*",
-      "passport": "*",
-      "passport-twitter": "*",
-      "passport-local": "*"
+    "express": "3.0.0",
+    "mongoose": "~3.6.19",
+    "moment": "~2.1.0",
+    "string": "~1.5.1",
+    "passport-local": "~0.1.6",
+    "passport": "~0.1.17",
+    "passport-twitter": "~1.0.1",
+    "request": "~2.27.0",
+    "colors": "~0.6.2",
+    "hogan-express": "~0.4.1",
+    "connect-assets": "~2.5.2"
   }
 }

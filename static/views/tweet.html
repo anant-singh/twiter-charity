@@ -1,7 +1,7 @@
 <section class="top-section" xmlns="http://www.w3.org/1999/html">
     <div class="wrap">
         <p class="social pressed-box">
-            <a href="#" class="twitter"><img src="{[{ user.photos[0].value }]}"></a>
+            <a href="#" class="twitter"><img ng-src="{[{ user.photos[0].value }]}"></a>
         </p>
 
         <h1>Welcome to Charity Today</h1>
@@ -14,13 +14,23 @@
 <!-- /Top Section -->
 
 <section id="bottom" class="bottom-section">
-    <div class="row bottom-cols wrap cf">
-        <div class="col span12">
-            <article>
-                <div class="col span6">
-                    <p>Hi, {[{ user.displayName }]}</p>
-                </div>
-            </article>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form id="tweet" class="form-inline" ng-submit="submit()">
+                    <textarea class="form-control" name="tweetBox" ng-model="tweet.tweetBox" rows="4" cols="60" required></textarea>
+                    <div class="control-group input-append col-md-6">
+                        <input type="text" class="form-control" ng-model="tweet.date" data-date-format="dd/mm/yyyy" bs-datepicker required>
+                        <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+                    </div>
+                    <div class="control-group input-append col-md-6">
+                        <input type="text" class="form-control" ng-model="tweet.time" bs-timepicker required>
+                        <button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>
+                    </div>
+                    <button id="notify-submit" type="submit" class="btn" >Tweet</button>
+                </form>
+                <p class="alert" ng-show="errFlag">{[{ errMsg }]}</p>
+            </div>
         </div>
     </div>
 </section>

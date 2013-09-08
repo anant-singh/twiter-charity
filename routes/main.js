@@ -1,7 +1,7 @@
 /**
  * Routes
  */
-module.exports = function(app, passportConn) {
+module.exports = function(app, passportConn, moment) {
 
     // Define a middleware function to be used for every secured routes
     var auth = function(req, res, next){
@@ -23,7 +23,14 @@ module.exports = function(app, passportConn) {
     }));
 
     app.get('/tweet/info', auth, function(req, res) {
+        console.log(req.user);
         res.json(req.user);
+    });
+
+    app.post('/tweet/data', auth, function(req, res) {
+        console.log(moment(req.body.date).format('MMMM Do YYYY'));
+        console.log(req.body);
+        res.end('success');
     });
     //==================================================================
 
