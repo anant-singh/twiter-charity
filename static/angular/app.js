@@ -131,7 +131,7 @@ var app = angular.module('ctApp', ['ngResource', '$strap.directives'])
  **********************************************************************/
 app.controller('TweetCtrl', function($scope, $http) {
     $scope.tweet = {};
-    $scope.tweet.date = '';
+    $scope.tweet.dateToTweet = '';
     $scope.stat = false;
     $http.get('/tweet/info').success(function(user) {
         $scope.user = user;
@@ -142,7 +142,7 @@ app.controller('TweetCtrl', function($scope, $http) {
     }
 
     $scope.submit = function() {
-        if ($scope.tweet.tweetBox.length > 140) {
+        if ($scope.tweet.tweet.length > 140) {
             $scope.errFlag = true;
             $scope.errMsg = "Tweet Length is larger than 140 characters";
         } else {

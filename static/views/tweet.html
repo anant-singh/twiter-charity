@@ -18,13 +18,13 @@
         <div class="row">
             <div class="col-md-6">
                 <form id="tweet" class="form-inline" ng-submit="submit()">
-                    <textarea class="form-control" name="tweetBox" ng-model="tweet.tweetBox" rows="4" cols="60" required></textarea>
+                    <textarea class="form-control" name="tweet" ng-model="tweet.tweet" rows="4" cols="60" required></textarea>
                     <div class="control-group input-append col-md-6">
-                        <input type="text" class="form-control" ng-model="tweet.date" data-date-format="dd/mm/yyyy" bs-datepicker required>
+                        <input type="text" class="form-control" ng-model="tweet.dateToTweet" data-date-format="dd/mm/yyyy" bs-datepicker required>
                         <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
                     </div>
                     <div class="control-group input-append col-md-6">
-                        <input type="text" class="form-control" ng-model="tweet.time" bs-timepicker required>
+                        <input type="text" class="form-control" ng-model="tweet.timeToTweet" bs-timepicker required>
                         <button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>
                     </div>
                     <button id="notify-submit" type="submit" class="btn" >Tweet</button>

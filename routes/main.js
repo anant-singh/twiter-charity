@@ -1,6 +1,9 @@
 /**
  * Routes
  */
+
+var db = require('../lib/db');
+
 module.exports = function(app, passportConn, moment) {
 
     // Define a middleware function to be used for every secured routes
@@ -10,6 +13,8 @@ module.exports = function(app, passportConn, moment) {
         else
             next();
     };
+
+    var stuff = {};
 
     //==================================================================
     // routes
@@ -23,14 +28,17 @@ module.exports = function(app, passportConn, moment) {
     }));
 
     app.get('/tweet/info', auth, function(req, res) {
-        console.log(req.user);
         res.json(req.user);
     });
 
     app.post('/tweet/data', auth, function(req, res) {
-        console.log(moment(req.body.date).format('MMMM Do YYYY'));
-        console.log(req.body);
-        res.end('success');
+        stuff.user = req.user;
+        stuff.data = req.body;
+        console.log(stuff.data.dateToTweet + " " + stuff.data.timeToTweet);
+        if (db.chSearch(stuff.data.dateToTweet, stuff.data.timeToTweet, moment))
+            {console.log('Your message will be tweeted');res.end();}
+        else
+            {console.log('Some error occurred');res.end();}
     });
     //==================================================================
 
