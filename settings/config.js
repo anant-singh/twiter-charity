@@ -3,7 +3,7 @@
 var settings = {
     'siteName'          : 'arkathon',
     'sessionSecret'     : 'sessionSecret',
-    'uri'               : 'http://local.host',
+    'uri'               : 'http://www.eighlark.com',
     'port'              : process.env.PORT || 3000,
     'debug'             : 0,
     'profile'           : 0,
