@@ -1,24 +1,25 @@
 {
-  "name": "charity-today",
-  "version": "0.9.1",
-  "private": true,
-  "scripts": {
-    "start": "node server"
-  },
-  "dependencies": {
-    "express": "3.0.0",
-    "mongoose": "~3.6.19",
-    "moment": "~2.1.0",
-    "string": "~1.5.1",
-    "passport-local": "~0.1.6",
-    "passport": "~0.1.17",
-    "passport-twitter": "~1.0.1",
-    "request": "~2.27.0",
-    "colors": "~0.6.2",
-    "hogan-express": "~0.4.1",
-    "connect-assets": "~2.5.2",
-    "validator": "~1.5.1",
-    "twix": "~0.3.0",
-    "oauth": "~0.9.10"
-  }
+    "name": "charity-today",
+    "version": "0.9.1",
+    "description": "Charity Today App",
+    "main": "app.js",
+    "scripts": {
+        "start": "node server"
+    },
+    "dependencies": {
+        "express": "3.0.0",
+        "mongoose": "~3.6.19",
+        "moment": "~2.1.0",
+        "string": "~1.5.1",
+        "passport-local": "~0.1.6",
+        "passport": "~0.1.17",
+        "passport-twitter": "~1.0.1",
+        "request": "~2.27.0",
+        "colors": "~0.6.2",
+        "hogan-express": "~0.4.1",
+        "connect-assets": "~2.5.2",
+        "validator": "~1.5.1",
+        "twix": "~0.3.0",
+        "oauth": "~0.9.10"
+    }
 }
