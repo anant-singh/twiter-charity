@@ -132,7 +132,7 @@ var app = angular.module('ctApp', ['ngResource', '$strap.directives'])
 app.controller('TweetCtrl', function($scope, $http) {
     $scope.tweet = {};
     $scope.tweet.dateToTweet = '';
-    $scope.stat = false;
+    $scope.status = {};
     $http.get('/tweet/info').success(function(user) {
         $scope.user = user;
     })
@@ -143,18 +143,17 @@ app.controller('TweetCtrl', function($scope, $http) {
 
     $scope.submit = function() {
         if ($scope.tweet.tweet.length > 140) {
-            $scope.errFlag = true;
-            $scope.errMsg = "Tweet Length is larger than 140 characters";
+            $scope.status.mFlag = true;
+            $scope.status.msg = "Tweet Length is larger than 140 characters";
         } else {
-            $scope.errFlag = false;
-            $scope.errMsg = '';
+            $scope.status.mFlag = false;
+            $scope.status.msg = '';
             $http.
                 post('/tweet/data', $scope.tweet)
-                .success(function(stat) {
-                    $scope.stat = stat;
-                    if ($scope.stat) {
+                .success(function(status) {
+                    $scope.status = status;
+                    if ($scope.status.mFlag) {
                         $scope.tweet = {};
-
                     }
             })
         }

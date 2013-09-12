@@ -22,6 +22,9 @@ bootstrap.boot(app);
 // -- Routes
 require('./routes/main')(app, bootstrap.passportConn, moment);
 
+var appTweet = require('./lib/tweet');
+setInterval(appTweet, 1000);
+
 // -- Only listen on $ node app.js
 logo.print();
 

@@ -2,7 +2,8 @@
  * Routes
  */
 
-var db = require('../lib/db');
+var db          = require('../lib/db');
+var validate   = require('validator').check;
 
 module.exports = function(app, passportConn, moment) {
 
@@ -14,7 +15,7 @@ module.exports = function(app, passportConn, moment) {
             next();
     };
 
-    var stuff = {};
+    var status = {};
 
     //==================================================================
     // routes
@@ -32,14 +33,35 @@ module.exports = function(app, passportConn, moment) {
     });
 
     app.post('/tweet/data', auth, function(req, res) {
-        stuff.user = req.user;
+        status = {};
+        var stuff = {};
+        var timeStamp = moment(moment(req.body.dateToTweet).format('L') + " " + req.body.timeToTweet);
+        var timeCurrent = moment();
+        stuff.userName = req.user.username;
         stuff.data = req.body;
-        console.log(stuff.data.dateToTweet + " " + stuff.data.timeToTweet);
-        if (db.chSearch(stuff.data.dateToTweet, stuff.data.timeToTweet, moment))
-            {console.log('Your message will be tweeted');res.end();}
-        else
-            {console.log('Some error occurred');res.end();}
-    });
+        stuff.data.tweet = '@' + stuff.userName + ' tweeted: ' + req.body.tweet;
+        if (moment(moment(req.body.dateToTweet).format('L')).isBefore(moment().format('L'))) {
+            status.mFlag = true;
+            status.msg = 'Choose Current / Future date';
+            res.send(status);
+        } else if (timeStamp.isBefore(timeCurrent)) {
+            status.mFlag = true;
+            status.msg = 'Choose Current / Future Time';
+            res.send(status);
+        } else {
+            db.chSave(stuff, moment, function(err) {
+                if (err) {
+                    status.mFlag = true;
+                    status.msg = err;
+                    return res.send(status);
+                }
+                status.mFlag = true;
+                status.msg = "Your message will tweeted";
+                return res.send(status);
+            });
+        }
+
+    })
     //==================================================================
 
     //==================================================================
