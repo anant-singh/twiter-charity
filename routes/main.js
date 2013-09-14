@@ -2,10 +2,11 @@
  * Routes
  */
 
-var db          = require('../lib/db');
-var validate   = require('validator').check;
+var db          = require('../lib/db'),
+    moment      = require('moment'),
+    validate    = require('validator').check;
 
-module.exports = function(app, passportConn, moment) {
+module.exports = function(app, passportConn) {
 
     // Define a middleware function to be used for every secured routes
     var auth = function(req, res, next){
@@ -33,34 +34,12 @@ module.exports = function(app, passportConn, moment) {
     });
 
     app.post('/tweet/data', auth, function(req, res) {
-        status = {};
-        var stuff = {};
-        var timeStamp = moment(moment(req.body.dateToTweet).format('L') + " " + req.body.timeToTweet);
-        var timeCurrent = moment();
-        stuff.userName = req.user.username;
-        stuff.data = req.body;
-        stuff.data.tweet = '@' + stuff.userName + ' tweeted: ' + req.body.tweet;
-        if (moment(moment(req.body.dateToTweet).format('L')).isBefore(moment().format('L'))) {
-            status.mFlag = true;
-            status.msg = 'Choose Current / Future date';
-            res.send(status);
-        } else if (timeStamp.isBefore(timeCurrent)) {
-            status.mFlag = true;
-            status.msg = 'Choose Current / Future Time';
-            res.send(status);
-        } else {
-            db.chSave(stuff, moment, function(err) {
-                if (err) {
-                    status.mFlag = true;
-                    status.msg = err;
-                    return res.send(status);
-                }
-                status.mFlag = true;
-                status.msg = "Your message will tweeted";
-                return res.send(status);
-            });
-        }
-
+        db.chSave(req.user.username, req.body, function(err) {
+            if (err) {
+                return res.send({type: 'danger', msg: err});
+            }
+            return res.send({type: 'success', msg: 'Your message will be tweeted'});
+        });
     })
     //==================================================================
 

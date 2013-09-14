@@ -10,7 +10,7 @@
 /**********************************************************************
  * Angular Application
  **********************************************************************/
-var app = angular.module('ctApp', ['ngResource', '$strap.directives'])
+var app = angular.module('ctApp', ['ui.bootstrap'])
     .config(function($routeProvider, $locationProvider, $httpProvider, $interpolateProvider) {
         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
         //================================================
@@ -23,12 +23,16 @@ var app = angular.module('ctApp', ['ngResource', '$strap.directives'])
             // Make an AJAX call to check if the user is logged in
             $http.get('/loggedin').success(function(user) {
                 // Authenticated
-                if (user !== '0')
+                if (user !== '0') {
+                    $rootScope.loggedIn = true;
+                    $rootScope.userName = user.displayName;
                     $timeout(deferred.resolve, 0);
+                }
 
                 // Not Authenticated
                 else {
                     $rootScope.message = 'You need to log in.';
+                    $rootScope.loggedIn = false;
                     $timeout(function(){deferred.reject();}, 0);
                     $location.url('/login');
                 }
@@ -130,32 +134,92 @@ var app = angular.module('ctApp', ['ngResource', '$strap.directives'])
  * Tweet controller
  **********************************************************************/
 app.controller('TweetCtrl', function($scope, $http) {
-    $scope.tweet = {};
-    $scope.tweet.dateToTweet = '';
-    $scope.status = {};
+    $scope.dataStream = {};
+    $scope.alerts = [];
+
     $http.get('/tweet/info').success(function(user) {
         $scope.user = user;
     })
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 
     $scope.encode = function(url) {
         return encodeURI(url);
     }
 
     $scope.submit = function() {
-        if ($scope.tweet.tweet.length > 140) {
-            $scope.status.mFlag = true;
-            $scope.status.msg = "Tweet Length is larger than 140 characters";
+        if ($scope.dataStream.tweet.length > 140) {
+            $scope.alerts.push({type: 'danger', msg: 'Tweet Length should not exceed 140 characters'});
+        } else if (typeof $scope.dataStream.dateToTweet === 'undefined') {
+            $scope.alerts.push({type: 'danger', msg: 'Oops! Please select a nice date to tweet'});
+        } else if (moment($scope.dataStream.timeToTweet).isBefore(moment())) {
+            $scope.alerts.push({type: 'danger', msg: 'Oops! Please select a nice time to tweet'});
         } else {
-            $scope.status.mFlag = false;
-            $scope.status.msg = '';
             $http.
-                post('/tweet/data', $scope.tweet)
+                post('/tweet/data', $scope.dataStream)
                 .success(function(status) {
-                    $scope.status = status;
-                    if ($scope.status.mFlag) {
-                        $scope.tweet = {};
-                    }
+                    $scope.alerts.push(status);
             })
         }
     }
+
+    /**
+     * DataPicker Function
+     */
+    $scope.today = function() {
+        $scope.dataStream.dateToTweet = new Date();
+    };
+    $scope.today();
+
+    $scope.showWeeks = true;
+    $scope.toggleWeeks = function () {
+        $scope.showWeeks = ! $scope.showWeeks;
+    };
+
+    // Disable weekend selection
+    $scope.disabled = function(date, mode) {
+        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    };
+
+    $scope.toggleMin = function() {
+        $scope.minDate = ( $scope.minDate ) ? null : new Date();
+    };
+    $scope.toggleMin();
+
+    $scope.open = function() {
+        $timeout(function() {
+            $scope.opened = true;
+        });
+    };
+
+    $scope.dateOptions = {
+        'year-format': "'yy'",
+        'starting-day': 1
+    };
+
+    /**
+     * TimePicker Controller
+     */
+    $scope.dataStream.timeToTweet = new Date();
+
+    $scope.hstep = 1;
+    $scope.mstep = 5;
+
+    $scope.ismeridian = true;
+    $scope.toggleMode = function() {
+        $scope.ismeridian = ! $scope.ismeridian;
+    };
+
+    $scope.update = function() {
+        var d = new Date();
+        d.setHours( 14 );
+        d.setMinutes( 0 );
+        $scope.dataStream.timeToTweet = d;
+    };
+
+    $scope.changed = function () {
+        console.log('Time changed to: ' + $scope.dataStream.timeToTweet);
+    };
 });

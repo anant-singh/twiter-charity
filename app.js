@@ -20,7 +20,7 @@ conf            (app, express, env);
 bootstrap.boot(app);
 
 // -- Routes
-require('./routes/main')(app, bootstrap.passportConn, moment);
+require('./routes/main')(app, bootstrap.passportConn);
 
 var appTweet = require('./lib/tweet');
 setInterval(appTweet, 1000);
