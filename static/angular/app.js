@@ -68,7 +68,8 @@ var app = angular.module('ctApp', ['ui.bootstrap'])
         //================================================
         $routeProvider
             .when('/', {
-                templateUrl: 'views/default.html'
+                templateUrl: 'views/default.html',
+                controller: 'DefaultCtrl'
             })
             .when('/tweet', {
                 templateUrl: 'views/tweet.html',
@@ -80,6 +81,20 @@ var app = angular.module('ctApp', ['ui.bootstrap'])
             .when('/login', {
                 templateUrl: 'views/login.html'
 //                controller: 'LoginCtrl'
+            })
+            .when('/stage', {
+                templateUrl: 'views/stage.html',
+                controller: 'StageCtrl',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when('/register', {
+                templateUrl: 'views/register.html',
+                controller: 'RegisterCtrl',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .otherwise({
                 redirectTo: '/'
@@ -102,31 +117,20 @@ var app = angular.module('ctApp', ['ui.bootstrap'])
  * *************************** Controllers ******************************
  * **********************************************************************
  */
-///**********************************************************************
-//* Login controller
-//**********************************************************************/
-//app.controller('LoginCtrl', function($scope, $rootScope, $http, $location) {
-//    // This object will be filled by the form
-//    $scope.user = {};
-//
-//    // Register the login() function
-//    $scope.login = function() {
-//        $http.post('/login', {
-//            username: $scope.user.username,
-//            password: $scope.user.password
-//        })
-//            .success(function(user) {
-//                // No error: authentication OK
-//                $rootScope.message = 'Authentication successful!';
-//                $location.url('/tweet');
-//            })
-//            .error(function() {
-//                // Error: authentication failed
-//                $rootScope.message = 'Authentication failed.';
-//                $location.url('/login');
-//            });
-//    };
-//});
+/**********************************************************************
+* Default controller
+**********************************************************************/
+app.controller('DefaultCtrl', function($scope, $http) {
+    $scope.timeline = {};
+    $scope.user = {};
+    $http.get('/tweet/info').success(function(user) {
+        $scope.user = user;
+    })
+    $http.get('/tweet/timeline')
+        .success(function(data) {
+            $scope.timeline.tweets = data;
+        });
+});
 
 
 
@@ -135,7 +139,9 @@ var app = angular.module('ctApp', ['ui.bootstrap'])
  **********************************************************************/
 app.controller('TweetCtrl', function($scope, $http) {
     $scope.dataStream = {};
+    $scope.timeline = {};
     $scope.alerts = [];
+    $scope.user = {};
 
     $http.get('/tweet/info').success(function(user) {
         $scope.user = user;
@@ -156,14 +162,32 @@ app.controller('TweetCtrl', function($scope, $http) {
             $scope.alerts.push({type: 'danger', msg: 'Oops! Please select a nice date to tweet'});
         } else if (moment($scope.dataStream.timeToTweet).isBefore(moment())) {
             $scope.alerts.push({type: 'danger', msg: 'Oops! Please select a nice time to tweet'});
-        } else {
-            $http.
-                post('/tweet/data', $scope.dataStream)
-                .success(function(status) {
-                    $scope.alerts.push(status);
-            })
-        }
+        } else $http.
+            post('/tweet/data', $scope.dataStream)
+            .success(function (status) {
+                $scope.alerts.push(status);
+            });
     }
+
+    /**
+     * ********************************************************
+     * Tweet Timeline Start
+     * ********************************************************
+     */
+
+    $http.
+        get('/tweet/timeline')
+        .success(function(data) {
+            $scope.timeline.tweets = data;
+            $scope.term = '@' + $scope.user.username;
+        });
+
+    /**
+     * ********************************************************
+     * Tweet Timeline End
+     * ********************************************************
+     */
+
 
     /**
      * DataPicker Function
@@ -222,4 +246,40 @@ app.controller('TweetCtrl', function($scope, $http) {
     $scope.changed = function () {
         console.log('Time changed to: ' + $scope.dataStream.timeToTweet);
     };
+});
+
+/**********************************************************************
+ * Stage controller
+ **********************************************************************/
+app.controller('StageCtrl', function($scope, $rootScope, $http, $location) {
+    $http.get('/tweet/info').success(function(user) {
+        $scope.user = user;
+    })
+    $http.get('/check/reg')
+        .success(function(res) {
+            $location.url('/tweet');
+        })
+        .error(function() {
+            $location.url('/register');
+        })
+});
+
+/**********************************************************************
+ * Register controller
+ **********************************************************************/
+app.controller('RegisterCtrl', function($scope, $rootScope, $http, $location) {
+    $scope.account = {};
+    $scope.alerts = [];
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+    $scope.submit = function() {
+        $http.
+            post('/account/data', $scope.account)
+            .success(function(status) {
+                $location.url('/tweet');
+            })
+    }
 });

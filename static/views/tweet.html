@@ -1,38 +1,50 @@
 <div class="main-content col-md-5">
-    <div>
+    <div class="row">
         <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{[{alert.msg}]}</alert>
     </div>
-    <form id="tweet" ng-submit="submit()">
-        <div class="form-group">
-            <label for="tweetMsg">Enter your tweet</label>
-            <textarea id="tweetMsg" class="form-control" name="tweet" ng-model="dataStream.tweet" rows="4" cols="60" placeholder="Write your tweet here" required></textarea>
-        </div>
-        <!--<div class="control-group input-append col-md-6">-->
-        <!--<input type="text" class="form-control" ng-model="tweet.dateToTweet" data-date-format="dd/mm/yyyy" bs-datepicker required>-->
-        <!--<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>-->
-        <!--</div>-->
-        <!--<div class="control-group input-append col-md-6">-->
-        <!--<input type="text" class="form-control" ng-model="tweet.timeToTweet" bs-timepicker required>-->
-        <!--<button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>-->
-        <!--</div>-->
-        <div class="form-group">
-            <label for="tweetMsg">Use the DatePicker to select date</label>
-            <div>
-                <pre>Selected date is: <em>{[{dataStream.dateToTweet | date:'fullDate' }]}</em></pre>
 
-                <div class="well well-small pull-left" ng-model="dataStream.dateToTweet">
-                    <datepicker min="minDate" show-weeks="showWeeks"></datepicker>
+    <div class="row">
+        <form id="tweet" ng-submit="submit()">
+            <div class="form-group">
+                <label for="tweetMsg">Enter your tweet</label>
+                <textarea id="tweetMsg" class="form-control" name="tweet" ng-model="dataStream.tweet" rows="4" cols="60" placeholder="Write your tweet here" required></textarea>
+            </div>
+            <!--<div class="control-group input-append col-md-6">-->
+            <!--<input type="text" class="form-control" ng-model="tweet.dateToTweet" data-date-format="dd/mm/yyyy" bs-datepicker required>-->
+            <!--<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>-->
+            <!--</div>-->
+            <!--<div class="control-group input-append col-md-6">-->
+            <!--<input type="text" class="form-control" ng-model="tweet.timeToTweet" bs-timepicker required>-->
+            <!--<button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>-->
+            <!--</div>-->
+            <div class="form-group">
+                <label for="tweetMsg">Use the DatePicker to select date</label>
+                <div>
+                    <pre>Selected date is: <em>{[{dataStream.dateToTweet | date:'fullDate' }]}</em></pre>
+
+                    <div class="well well-small pull-left" ng-model="dataStream.dateToTweet">
+                        <datepicker min="minDate" show-weeks="showWeeks"></datepicker>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div>
-                <div ng-model="dataStream.timeToTweet" ng-change="changed()" class="well well-small" style="display:inline-block;">
-                    <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+            <div class="form-group">
+                <div>
+                    <div ng-model="dataStream.timeToTweet" ng-change="changed()" class="well well-small" style="display:inline-block;">
+                        <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+                    </div>
+                    <pre>Selected time is: {[{dataStream.timeToTweet | date:'shortTime' }]}</pre>
                 </div>
-                <pre>Time is: {[{dataStream.timeToTweet | date:'shortTime' }]}</pre>
             </div>
+            <button id="notify-submit" type="submit" class="btn btn-default" >Tweet</button>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="list-group">
+            <a href="#/tweet" class="list-group-item" ng-repeat="tweet in timeline.tweets | filter:term">
+                <h4 class="list-group-item-heading">{[{ tweet.user.name }]}</h4>
+                <p class="list-group-item-text">{[{ tweet.text }]}</p>
+            </a>
         </div>
-        <button id="notify-submit" type="submit" class="btn btn-default" >Tweet</button>
-    </form>
+    </div>
 </div>

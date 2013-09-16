@@ -4,7 +4,8 @@
 
 var db          = require('../lib/db'),
     moment      = require('moment'),
-    validate    = require('validator').check;
+    validate    = require('validator').check,
+    twitter     = require('../lib/twitter');
 
 module.exports = function(app, passportConn) {
 
@@ -25,20 +26,46 @@ module.exports = function(app, passportConn) {
     });
 
     app.get('/auth/twitter/callback', passportConn.passport.authenticate('twitter', {
-        successRedirect: '/#/tweet',
+        successRedirect: '/#/stage',
         failureRedirect: '/'
     }));
 
     app.get('/tweet/info', auth, function(req, res) {
-        res.json(req.user);
+        res.send(req.user);
     });
 
+    app.get('/check/reg', auth, function(req, res){
+        db.CharityAccount
+            .findOne({ 'userName': req.user.username })
+            .exec(function(err, record) {
+                if (err) {return res.send(err);}
+                else if (record) {return res.send(record);}
+                else {return res.send(404);}
+            })
+    });
+
+    app.get('/tweet/timeline', auth, function(req, res) {
+        twitter.getTimeline(function(err, data) {
+            if (err) res.send(404);
+            res.send(data);
+        })
+    })
+
     app.post('/tweet/data', auth, function(req, res) {
-        db.chSave(req.user.username, req.body, function(err) {
+        db.chSave('tweet', req.user.username, req.body, function(err) {
             if (err) {
                 return res.send({type: 'danger', msg: err});
             }
             return res.send({type: 'success', msg: 'Your message will be tweeted'});
+        });
+    })
+
+    app.post('/account/data', auth, function(req, res) {
+        db.chSave('account', req.user.username, req.body, function(err) {
+            if (err) {
+                return res.send({type: 'danger', msg: err});
+            }
+            return res.send({type: 'success', msg: 'Your account has been registered'});
         });
     })
     //==================================================================

@@ -1,0 +1,17 @@
+<h1>Register</h1>
+<div class="main-content col-md-5">
+    <div>
+        <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{[{alert.msg}]}</alert>
+    </div>
+    <form id="Account" ng-submit="submit()">
+        <div class="form-group">
+            <label for="phoneNumber">Enter your Phone Number</label>
+            <textarea id="phoneNumber" class="form-control" name="phoneNumber" ng-model="account.phoneNumber" rows="4" cols="60" placeholder="Enter Phone Number" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="emailAddress">Enter your Email Address</label>
+            <textarea id="emailAddress" class="form-control" name="emailAddress" ng-model="account.emailAddress" rows="4" cols="60" placeholder="Enter Email Address" required></textarea>
+        </div>
+        <button id="notify-submit" type="submit" class="btn btn-default">Register</button>
+    </form>
+</div>

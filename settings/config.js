@@ -7,6 +7,7 @@ var settings = {
     'port'              : process.env.PORT || 3000,
     'debug'             : 0,
     'profile'           : 0,
+    'username'          : 'akshay_kSingh',
     'twitterConfig'     : {
         consumerKey     : "3cRsFs9Imklo4jBtXfAzA",
         consumerSecret  : "3VbaUqo6HC9zaqtmseNRolysBcPUN59esIDLmyrYms",

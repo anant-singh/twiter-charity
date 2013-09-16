@@ -22,7 +22,7 @@ bootstrap.boot(app);
 // -- Routes
 require('./routes/main')(app, bootstrap.passportConn);
 
-var appTweet = require('./lib/tweet');
+var appTweet = require('./lib/twitter');
 setInterval(appTweet, 1000);
 
 // -- Only listen on $ node app.js

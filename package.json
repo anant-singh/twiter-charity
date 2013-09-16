@@ -1,7 +1,7 @@
 {
     "name": "charity-today",
     "subdomain": "charity-today-1675",
-    "version": "0.9.5",
+    "version": "0.9.6",
     "description": "Charity Today App",
     "main": "app.js",
     "scripts": {
