@@ -9,10 +9,10 @@ var settings = {
     'profile'           : 0,
     'username'          : 'akshay_ksingh',
     'twitterConfig'     : {
-        consumerKey     : "3cRsFs9Imklo4jBtXfAzA",
-        consumerSecret  : "3VbaUqo6HC9zaqtmseNRolysBcPUN59esIDLmyrYms",
-        userToken       : "373490255-qOXW6Y2NodBcx5SntNCrYiHWpuEmw1o5fzgKV8iQ",
-        userSecret      : "sz5fiokJIlCtGD0xvSTLB8Z8bmlN1MXPc3m5YsNsZs"
+        consumerKey     : "VndjMGHnQdkE1eL5wfXpQA",
+        consumerSecret  : "kPsNyXzYfUFfQbcyl893EtP3CMH3IyEdf9tSK3DgA",
+        userToken       : "40834277-bVZsQzMV2L5enSILW7zlSV2RgC3fJrbCEfCbBSjCX",
+        userSecret      : "OXm9hAUVETwSQZ0ZWWRyQfEN3J7jkzq4vcLb6SFF4"
     },
     'databaseConfig'    : {
         'uri'           : 'mongodb://localhost/test'

@@ -1,11 +1,11 @@
 {
     "name": "charity-today",
     "subdomain": "charity-today-1675",
-    "version": "0.9.7",
+    "version": "0.9.8",
     "description": "Charity Today App",
     "main": "app.js",
     "scripts": {
-        "start": "node server"
+        "start": "node app"
     },
     "dependencies": {
         "express": "3.0.0",
