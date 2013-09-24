@@ -61,7 +61,6 @@ module.exports = function(app, passportConn) {
     app.get('/info/admin/getlist', auth, isadmin, function(req, res) {
         db.CharityAccount
             .find({'__v': 0})
-            .where({'approved': 'false'})
             .exec(function(err, record) {
                 if (err) {res.send(err);}
                 console.log(record);

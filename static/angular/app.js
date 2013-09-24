@@ -275,7 +275,7 @@ app.controller('RegisterCtrl', function($scope, $rootScope, $http, $location) {
  **********************************************************************/
 app.controller('AdminCtrl', function($scope, $rootScope, $http, $location) {
     $scope.alerts = [];
-    $scope.records = {};
+    $scope.records = [];
     $http.get('/info/isadmin')
         .success(function(flag) {
             $scope.flag = flag;
@@ -289,7 +289,11 @@ app.controller('AdminCtrl', function($scope, $rootScope, $http, $location) {
 
     $http.get('/info/admin/getlist')
         .success(function(data) {
-            $scope.records = data;
+            angular.forEach(data, function(record) {
+                if(record.approved == 'false') {
+                    $scope.records.push(record);
+                }
+            })
             if ($scope.records.length < 1) $scope.alerts.push({type: 'success', msg: 'You do not have any pending requests'});
         })
 
